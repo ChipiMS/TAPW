@@ -1,3 +1,18 @@
 <div ng-controller="LayoutCtrl">
-    <div ui-view layout-fill></div>
+	<md-content>
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidebar()">
+					<md-icon md-svg-icon="images/icons/menu.svg"></md-icon>
+				</md-button>
+
+				<h2 flex md-truncate>Admin de la tienda</h2>
+			</div>
+		</md-toolbar>
+
+		<md-sidenav class="md-sidenav-left" md-component-id="navigationLeft" md-whiteframe="4">
+        </md-sidenav>
+
+    	<div ui-view layout-fill></div>
+    </md-content>
 </div>
