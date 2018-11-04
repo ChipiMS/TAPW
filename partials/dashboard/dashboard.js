@@ -1,3 +1,3 @@
-angular.module('ProjectApp').controller('DashboardCtrl', function($scope){
-    
+angular.module('ProjectApp').controller('DashboardCtrl', function($scope, $http){
+	
 });

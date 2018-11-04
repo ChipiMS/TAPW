@@ -1,5 +1,5 @@
-<div ng-controller="LayoutCtrl">
-	<md-content>
+<div ng-controller="LayoutCtrl" layout-fill>
+	<md-content layout-fill>
 		<md-toolbar class="md-hue-2">
 			<div class="md-toolbar-tools">
 				<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidebar()">
@@ -11,6 +11,12 @@
 		</md-toolbar>
 
 		<md-sidenav class="md-sidenav-left" md-component-id="navigationLeft" md-whiteframe="4">
+			<ul>
+				<li><a ui-sref="webapp.dashboard" ui-sref-active="activeRoute">Inicio</a></li>
+				<li><a ui-sref="webapp.clients" ui-sref-active="activeRoute">Clientes</a></li>
+				<li><a ui-sref="webapp.purchases" ui-sref-active="activeRoute">Ordenes</a></li>
+				<li><a ui-sref="webapp.products" ui-sref-active="activeRoute">Productos</a></li>
+			</ul>
         </md-sidenav>
 
     	<div ui-view layout-fill></div>

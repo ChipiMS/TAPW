@@ -14,9 +14,24 @@
             templateUrl: 'partials/layout/layout.html'
         });
 
+        $stateProvider.state('webapp.clients', {
+            url: '/clients',
+            templateUrl: 'partials/clients/clients.html'
+        });
+
         $stateProvider.state('webapp.dashboard', {
             url: '',
             templateUrl: 'partials/dashboard/dashboard.html'
+        });
+
+        $stateProvider.state('webapp.purchases', {
+            url: '/purchases',
+            templateUrl: 'partials/purchases/purchases.html'
+        });
+
+        $stateProvider.state('webapp.products', {
+            url: '/products',
+            templateUrl: 'partials/products/products.html'
         });
 
         if(window.history && window.history.pushState){
