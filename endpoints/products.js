@@ -7,7 +7,7 @@ module.exports = function(app){
 		database: "shop"
 	});
 
-    app.get('/api/purchases', function(req, res){
+    app.get('/api/products', function(req, res){
     	connection.query('SELECT * from Purchases', function(err, rows, fields){
 			if(err){
 				throw err;
@@ -16,7 +16,7 @@ module.exports = function(app){
 		});
     });
 
-    app.post('/api/purchases', function(req, res){
+    app.post('/api/products', function(req, res){
     	connection.query('SELECT * from Purchases', function(err, rows, fields){
 			if(err){
 				throw err;
