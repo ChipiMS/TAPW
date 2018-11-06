@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 require('./endpoints/clients')(app);
+require('./endpoints/countries')(app);
 require('./endpoints/products')(app);
 require('./endpoints/purchases')(app);
 
