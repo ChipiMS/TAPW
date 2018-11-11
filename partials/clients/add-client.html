@@ -3,58 +3,58 @@
 		<div class="md-toolbar-tools">
 			<h2>Agregar cliente</h2>
 		</div>
-    </md-toolbar>
-    <md-dialog-content>
+	</md-toolbar>
+	<md-dialog-content>
 		<div layout="row">
 			<div flex="50">
 				<md-input-container>
 					<label>Usuario</label>
 					<input required ng-model="client.username" name="username">
 					<div ng-messages="clientsForm.username.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Contraseña</label>
 					<input required ng-model="client.password" name="password">
 					<div ng-messages="clientsForm.password.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Nombre</label>
 					<input required ng-model="client.name" name="name">
 					<div ng-messages="clientsForm.name.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Apellidos</label>
 					<input required ng-model="client.apellidos" name="apellidos">
 					<div ng-messages="clientsForm.apellidos.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Compañia</label>
 					<input required ng-model="client.company" name="company">
 					<div ng-messages="clientsForm.company.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Email</label>
 					<input required ng-model="client.email" name="email">
 					<div ng-messages="clientsForm.email.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Teléfono</label>
 					<input required ng-model="client.phone" name="phone">
 					<div ng-messages="clientsForm.phone.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 			</div>
 			<div flex="50">
@@ -62,29 +62,29 @@
 					<label>Calle</label>
 					<input required ng-model="client.street" name="street">
 					<div ng-messages="clientsForm.street.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Código postal</label>
 					<input required ng-model="client.pc" name="pc">
 					<div ng-messages="clientsForm.pc.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Ciudad</label>
 					<input required ng-model="client.city" name="city">
 					<div ng-messages="clientsForm.city.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Estado</label>
 					<input required ng-model="client.state" name="state">
 					<div ng-messages="clientsForm.state.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>País</label>
@@ -92,14 +92,14 @@
 						<md-option ng-repeat="country in countries" ng-value="country.idCountry">{{country.name}}</md-option>
 					</md-select>
 					<div ng-messages="clientsForm.name.$error" role="alert" multiple>
-			        	<div ng-message="required">Esto es obligatorio.</div>
-			        </div>
+						<div ng-message="required">Esto es obligatorio.</div>
+					</div>
 				</md-input-container>
 			</div>
 		</div>
 	</md-dialog-content>
 	<md-dialog-actions layout="row">
-	    <md-button class="md-warn" ng-click="close()">Cerrar</md-button>
-	    <md-button class="md-primary" ng-disabled="clientsForm.$invalid">Crear</md-button>
-    </md-dialog-actions>
+		<md-button class="md-warn" ng-click="close()">Cerrar</md-button>
+		<md-button class="md-primary" ng-disabled="clientsForm.$invalid">Crear</md-button>
+	</md-dialog-actions>
 </form>

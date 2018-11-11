@@ -8,9 +8,7 @@ module.exports = function(app){
 	});
 
     app.get('/api/clients', function(req, res){
-    	connection.query('SELECT cu.username username, cu.password password, cu.name name, cu.apellidos apellidos, cu.company company, cu.email email, cu.phone phone, a.street street, a.pc pc, a.city city, a.state state, co.name country, co.idCountry, a.idAddress from Customers cu '+
-    		'inner join Countries co on cu.idCountry = co.idCountry '+
-    		'inner join Addresses a on cu.idAddress = a.idAddress', function(err, rows, fields){
+    	connection.query('SELECT * from Customer', function(err, rows, fields){
 			if(err){
 				throw err;
 			}

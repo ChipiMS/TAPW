@@ -1,4 +1,21 @@
 <div ng-controller="LoginCtrl">
     <h1>Iniciar sesión</h1>
-    <a ui-sref="webapp.dashboard">Iniciar sesión</a>
+    <form name="loginForm" aria-label="Login" layout="column" layout-align="center start">
+	    <md-input-container>
+			<label>Nombre de usuario</label>
+			<input required ng-model="user.username" name="username" ng-change="change()">
+			<div ng-messages="loginForm.username.$error" role="alert" multiple>
+				<div ng-message="required">Ingresa un usuario por favor.</div>
+				<div ng-message="wrong">Usuario o contraseña incorrecto.</div>
+			</div>
+		</md-input-container>
+		<md-input-container>
+			<label>Contraseña</label>
+			<input required ng-model="user.password" name="password" type="password" ng-change="change()">
+			<div ng-messages="loginForm.password.$error" role="alert" multiple>
+				<div ng-message="required">Ingresa una contraseña por favor.</div>
+			</div>
+		</md-input-container>
+		<md-button class="md-primary md-raised" ng-disabled="loginForm.$invalid" ng-click="login()">Entrar</md-button>
+	</form>
 </div>

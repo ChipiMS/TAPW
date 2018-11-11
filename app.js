@@ -11,6 +11,19 @@
         $stateProvider.state('webapp', {
             abstract: true,
             url: '/app',
+            resolve: {
+                isSigned: function($state, $rootScope, $timeout){
+                    if($rootScope.username){
+                        return true;
+                    }
+                    else{
+                        $timeout(function(){
+                            $state.go("auth.auth");
+                        });
+                        return false;
+                    }
+                }
+            },
             templateUrl: 'partials/layout/layout.html'
         });
 
@@ -99,7 +112,9 @@
     ██╔══██╗██║   ██║██║╚██╗██║
     ██║  ██║╚██████╔╝██║ ╚████║
     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝*/
-    angular.module('ProjectApp').run(function($rootScope){
+    angular.module('ProjectApp').run(function($rootScope, $cookies){
+        $rootScope.username = $cookies.get('session');
+
         $(document).on('click', function(event) {
             $rootScope.$apply(function() {
                 $rootScope.$emit('global:clickListen', event);
