@@ -32,6 +32,11 @@
             templateUrl: 'partials/clients/clients.html'
         });
 
+        $stateProvider.state('webapp.countries', {
+            url: '/countries',
+            templateUrl: 'partials/countries/countries.html'
+        });
+
         $stateProvider.state('webapp.dashboard', {
             url: '',
             templateUrl: 'partials/dashboard/dashboard.html'

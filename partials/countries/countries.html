@@ -1,0 +1,25 @@
+<div ng-controller="CountriesCtrl" class="countries">
+	<div ng-repeat="country in countries">
+		<div layout="row" layout-align="space-between center" class="country">
+			<input ng-model="country.name" ng-change="countryChange(country)">
+			<div>
+				<i class="fa fa-plus" ng-click="startState(country)"></i>
+				<i class="fa" ng-class="{'fa-chevron-down': !country.expanded, 'fa-chevron-up': country.expanded}" ng-click="toggleCountry(country)"></i>
+			</div>
+		</div>
+		<div ng-if="country.creatingState">
+			<input ng-model="model.newState">
+			<i class="fa fa-times" ng-click="finishState(country)"></i>
+			<i class="fa fa-check" ng-click="createState(country)"></i>
+		</div>
+		<div ng-if="country.expanded">
+			<div ng-repeat="state in country.states">
+				<input ng-model="state.name" ng-change="stateChange(state)">
+			</div>
+		</div>
+	</div>
+	<input ng-model="model.newCountry" class="newCountry">
+	<md-button class="md-fab md-primary" aria-label="Use Android" ng-click="createCountry()">
+		<i class="fa fa-plus"></i>
+	</md-button>
+</div>
