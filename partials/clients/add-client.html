@@ -1,4 +1,4 @@
-<form name="clientsForm" aria-label="Add client" ng-controller="AddClientCtrl">
+<form name="clientsForm" aria-label="Add client">
 	<md-toolbar>
 		<div class="md-toolbar-tools">
 			<h2>Agregar cliente</h2>
@@ -9,14 +9,14 @@
 			<div flex="50">
 				<md-input-container>
 					<label>Usuario</label>
-					<input required ng-model="client.username" name="username">
+					<input required ng-model="client.username" name="username" ng-disable="isUpdating">
 					<div ng-messages="clientsForm.username.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
 				</md-input-container>
 				<md-input-container>
 					<label>Contraseña</label>
-					<input required ng-model="client.password" name="password">
+					<input required ng-model="client.password" name="password" type="password">
 					<div ng-messages="clientsForm.password.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
@@ -30,15 +30,8 @@
 				</md-input-container>
 				<md-input-container>
 					<label>Apellidos</label>
-					<input required ng-model="client.apellidos" name="apellidos">
-					<div ng-messages="clientsForm.apellidos.$error" role="alert" multiple>
-						<div ng-message="required">Esto es obligatorio.</div>
-					</div>
-				</md-input-container>
-				<md-input-container>
-					<label>Compañia</label>
-					<input required ng-model="client.company" name="company">
-					<div ng-messages="clientsForm.company.$error" role="alert" multiple>
+					<input required ng-model="client.lastName" name="lastName">
+					<div ng-messages="clientsForm.lastName.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
 				</md-input-container>
@@ -67,8 +60,8 @@
 				</md-input-container>
 				<md-input-container>
 					<label>Código postal</label>
-					<input required ng-model="client.pc" name="pc">
-					<div ng-messages="clientsForm.pc.$error" role="alert" multiple>
+					<input required ng-model="client.postalCode" name="postalCode">
+					<div ng-messages="clientsForm.postalCode.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
 				</md-input-container>
@@ -80,18 +73,20 @@
 					</div>
 				</md-input-container>
 				<md-input-container>
-					<label>Estado</label>
-					<input required ng-model="client.state" name="state">
-					<div ng-messages="clientsForm.state.$error" role="alert" multiple>
+					<label>País</label>
+					<md-select required ng-model="client.idCountry" name="idCountry" ng-change="contryChange()">
+						<md-option ng-repeat="country in countries" ng-value="country.idCountry">{{country.name}}</md-option>
+					</md-select>
+					<div ng-messages="clientsForm.idCountry.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
 				</md-input-container>
 				<md-input-container>
-					<label>País</label>
-					<md-select required ng-model="client.idCountry" name="name">
-						<md-option ng-repeat="country in countries" ng-value="country.idCountry">{{country.name}}</md-option>
+					<label>Estado</label>
+					<md-select required ng-model="client.idState" name="idState" ng-disabled="states.length === 0">
+						<md-option ng-repeat="state in states" ng-value="state.idState">{{state.name}}</md-option>
 					</md-select>
-					<div ng-messages="clientsForm.name.$error" role="alert" multiple>
+					<div ng-messages="clientsForm.idState.$error" role="alert" multiple>
 						<div ng-message="required">Esto es obligatorio.</div>
 					</div>
 				</md-input-container>
@@ -100,6 +95,7 @@
 	</md-dialog-content>
 	<md-dialog-actions layout="row">
 		<md-button class="md-warn" ng-click="close()">Cerrar</md-button>
-		<md-button class="md-primary" ng-disabled="clientsForm.$invalid">Crear</md-button>
+		<md-button class="md-primary" ng-disabled="clientsForm.$invalid" ng-if="!isUpdating" ng-click="add()">Crear</md-button>
+		<md-button class="md-primary" ng-disabled="clientsForm.$invalid" ng-if="isUpdating" ng-click="add()">Actualizar</md-button>
 	</md-dialog-actions>
 </form>

@@ -7,12 +7,12 @@ module.exports = function(app){
 		database: "shop"
 	});
 
-    app.get('/api/countries', function(req, res){
-    	connection.query('SELECT * from Countries', function(err, rows, fields){
+	app.get('/api/countries', function(req, res){
+		connection.query('SELECT * from Country', function(err, rows, fields){
 			if(err){
 				throw err;
 			}
 			res.json(rows);
 		});
-    });
+	});
 }

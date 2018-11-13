@@ -1,25 +1,38 @@
 angular.module('ProjectApp').controller('ClientsCtrl', function($scope, $http, $mdMenu, $rootScope, $mdDialog){
 	var cleanEvent;
-	$http.get("/api/clients").then(function(data){
-		$scope.clients = data.data;
-	});
+	
+	function init(){
+		$http.get("/api/clients/list").then(function(data){
+			var i;
+			$scope.clients = data.data;
+		});
+	}
 
 	$scope.add = function(){
 		$mdDialog.show({
-			templateUrl: 'partials/clients/add-client.html',
-			clickOutsideToClose: true
-		})
+			clickOutsideToClose: true,
+			controller: "AddClientCtrl",
+			locals: {modalInfo: false},
+			templateUrl: 'partials/clients/add-client.html'
+		}).then(init);
 	};
 
 	$scope.delete = function(client){
-		console.log(client);
+		$http.delete("/api/clients", {params: {username: client.username}}).then(init);
 	};
 
 	$scope.edit = function(client){
-		console.log(client);
+		$mdDialog.show({
+			clickOutsideToClose: true,
+			controller: "AddClientCtrl",
+			locals: {modalInfo: client},
+			templateUrl: 'partials/clients/add-client.html'
+		}).then(init);
 	};
 
 	cleanEvent = $rootScope.$on('global:clickListen', $mdMenu.hide);
 
 	$scope.$on("$destroy", cleanEvent);
+
+	init();
 });

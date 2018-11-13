@@ -3,10 +3,9 @@
 		<thead>
 			<tr>
 				<th>Usuario</th>
-				<th>Contraseña</th>
 				<th>Nombre</th>
 				<th>Apellidos</th>
-				<th>Compañia</th>
+				<th>Creación</th>
 				<th>Email</th>
 				<th>Teléfono</th>
 				<th>Calle</th>
@@ -20,14 +19,13 @@
 		<tbody>
 			<tr ng-repeat="client in clients">
 				<td>{{client.username}}</td>
-				<td>{{client.password}}</td>
 				<td>{{client.name}}</td>
-				<td>{{client.apellidos}}</td>
-				<td>{{client.company}}</td>
+				<td>{{client.lastName}}</td>
+				<td>{{client.dCreate}}</td>
 				<td>{{client.email}}</td>
 				<td>{{client.phone}}</td>
 				<td>{{client.street}}</td>
-				<td>{{client.pc}}</td>
+				<td>{{client.postalCode}}</td>
 				<td>{{client.city}}</td>
 				<td>{{client.state}}</td>
 				<td>{{client.country}}</td>
