@@ -1,12 +1,4 @@
-module.exports = function(app){
-	var mysql = require('mysql');
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '0112',
-		database: "shop"
-	});
-
+module.exports = function(app, connection){
 	app.delete('/api/products', function(req, res){
 		var idProduct = req.query.idProduct;
 		connection.query("delete from Product where idProduct = '"+idProduct+"';", function(err, rows, fields){

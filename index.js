@@ -1,5 +1,12 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+	host: 'localhost',
+	user: 'root',
+	password: '0112',
+	database: "shop"
+});
 var app = express();
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -12,12 +19,12 @@ app.use(bodyParser.json());
 ██╔══╝  ██║╚██╗██║██║  ██║██╔═══╝ ██║   ██║██║██║╚██╗██║   ██║   ╚════██║
 ███████╗██║ ╚████║██████╔╝██║     ╚██████╔╝██║██║ ╚████║   ██║   ███████║
 ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝*/
-require('./endpoints/auth')(app);
-require('./endpoints/clients')(app);
-require('./endpoints/countries')(app);
-require('./endpoints/products')(app);
-require('./endpoints/purchases')(app);
-require('./endpoints/states')(app);
+require('./endpoints/auth')(app, connection);
+require('./endpoints/clients')(app, connection);
+require('./endpoints/countries')(app, connection);
+require('./endpoints/products')(app, connection);
+require('./endpoints/purchases')(app, connection);
+require('./endpoints/states')(app, connection);
 
 /*
 ███████╗██╗██╗     ███████╗    ████████╗██╗   ██╗██████╗ ███████╗███████╗

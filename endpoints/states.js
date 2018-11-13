@@ -1,12 +1,4 @@
-module.exports = function(app){
-	var mysql = require("mysql");
-	var connection = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "0112",
-		database: "shop"
-	});
-
+module.exports = function(app, connection){
 	app.get("/api/states", function(req, res){
 		var idCountry = req.query.idCountry;
 		connection.query("SELECT * from State where idCountry = "+idCountry, function(err, rows, fields){
