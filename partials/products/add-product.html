@@ -1,0 +1,48 @@
+<form name="productsForm" aria-label="Add product">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Agregar producto</h2>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div layout="column">
+			<md-input-container>
+				<label>Nombre</label>
+				<input required ng-model="product.name" name="name">
+				<div ng-messages="productsForm.name.$error" role="alert" multiple>
+					<div ng-message="required">Esto es obligatorio.</div>
+				</div>
+			</md-input-container>
+			<md-input-container>
+				<label>Precio</label>
+				<input required ng-model="product.price" name="price">
+				<div ng-messages="productsForm.price.$error" role="alert" multiple>
+					<div ng-message="required">Esto es obligatorio.</div>
+				</div>
+			</md-input-container>
+			<md-input-container>
+				<label>Categoría</label>
+				<md-select required ng-model="product.idCategory" name="idCategory">
+					<md-option ng-repeat="category in categories" ng-value="category.idCategory">{{category.name}}</md-option>
+				</md-select>
+				<div ng-messages="productsForm.idCategory.$error" role="alert" multiple>
+					<div ng-message="required">Esto es obligatorio.</div>
+				</div>
+			</md-input-container>
+			<md-input-container>
+				<label>Proveedor</label>
+				<md-select required ng-model="product.idProvider" name="idProvider">
+					<md-option ng-repeat="provider in providers" ng-value="provider.idProvider">{{provider.name}}</md-option>
+				</md-select>
+				<div ng-messages="productsForm.idProvider.$error" role="alert" multiple>
+					<div ng-message="required">Esto es obligatorio.</div>
+				</div>
+			</md-input-container>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<md-button class="md-warn" ng-click="close()">Cerrar</md-button>
+		<md-button class="md-primary" ng-disabled="productsForm.$invalid" ng-if="!isUpdating" ng-click="add()">Crear</md-button>
+		<md-button class="md-primary" ng-disabled="productsForm.$invalid" ng-if="isUpdating" ng-click="add()">Actualizar</md-button>
+	</md-dialog-actions>
+</form>

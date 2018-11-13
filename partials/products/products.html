@@ -1,3 +1,41 @@
 <div ng-controller="ProductsCtrl">
-    ¡Hola administrador!
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Precio</th>
+				<th>Categoría</th>
+				<th>Proveedor</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="product in products">
+				<td>{{product.idProduct}}</td>
+				<td>{{product.name}}</td>
+				<td>{{product.price}}</td>
+				<td>{{product.category}}</td>
+				<td>{{product.provider}}</td>
+				<td>
+					<md-menu>
+						<md-button aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+							<md-icon class="fa fa-ellipsis-h"></md-icon>
+						</md-button>
+						<md-menu-content>
+							<md-menu-item>
+								<md-button ng-click="edit(product)">Editar</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="delete(product)">Borrar</md-button>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<md-button class="md-fab md-primary" aria-label="Use Android" ng-click="add()">
+		<i class="fa fa-plus"></i>
+	</md-button>
 </div>
