@@ -1,3 +1,71 @@
-<div ng-controller="PurchasesCtrl">
-    ¡Hola administrador!
+<div ng-controller="PurchasesCtrl" class="orders">
+	<h1>Completadas</h1>
+    <div ng-repeat="completed in purchases.completed">
+		<div layout="row" layout-align="space-between center" class="order" ng-click="toggle(completed)">
+			<div>
+				<span>Id: {{completed.idCart}}</span>
+				<span>Usuario: {{completed.username}}</span>
+				<span>Cupón: {{completed.idCoupon}}</span>
+				<span>Fecha: {{completed.pDate}}</span>
+				<span>Método de pago: {{completed.paymentMethod}}</span>
+				<span>Subtotal: {{completed.subtotal}}</span>
+				<span>Total: {{completed.total}}</span>
+			</div>
+			<div>
+				<i class="fa" ng-class="{'fa-chevron-down': !completed.expanded, 'fa-chevron-up': completed.expanded}"></i>
+			</div>
+		</div>
+		<table ng-if="completed.expanded">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Cantidad</th>
+					<th>Categoría</th>
+					<th>Proveedor</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in completed.items">
+					<td>{{item.name}}</td>
+					<td>{{item.price}}</td>
+					<td>{{item.quantity}}</td>
+					<td>{{item.category}}</td>
+					<td>{{item.provider}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h1>Pendientes</h1>
+	<div ng-repeat="pending in purchases.pending">
+		<div layout="row" layout-align="space-between center" class="order" ng-click="toggle(pending)">
+			<div>
+				<span>Id: {{pending.idCart}}</span>
+				<span>Total: {{pending.total}}</span>
+			</div>
+			<div>
+				<i class="fa" ng-class="{'fa-chevron-down': !pending.expanded, 'fa-chevron-up': pending.expanded}"></i>
+			</div>
+		</div>
+		<table ng-if="pending.expanded">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Cantidad</th>
+					<th>Categoría</th>
+					<th>Proveedor</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in pending.items">
+					<td>{{item.name}}</td>
+					<td>{{item.price}}</td>
+					<td>{{item.quantity}}</td>
+					<td>{{item.category}}</td>
+					<td>{{item.provider}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
