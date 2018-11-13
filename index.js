@@ -27,6 +27,7 @@ require('./endpoints/products')(app, connection);
 require('./endpoints/purchases')(app, connection);
 require('./endpoints/states')(app, connection);
 require('./endpoints/providers')(app, connection);
+require('./endpoints/categories')(app, connection);
 
 /*
 ███████╗██╗██╗     ███████╗    ████████╗██╗   ██╗██████╗ ███████╗███████╗
