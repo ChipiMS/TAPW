@@ -3,10 +3,10 @@ angular.module('ProjectApp').controller('AddProductCtrl', function($scope, $http
 	$scope.product = {};
 
 	function init(){
-		$http.get("/api/categories").then(function(response){
+		$http.get("/api/categories/list").then(function(response){
 			$scope.categories = response.data;
 		});
-		$http.get("/api/providers").then(function(response){
+		$http.get("/api/providers/list").then(function(response){
 			$scope.providers = response.data;
 		});
 		if(modalInfo){
