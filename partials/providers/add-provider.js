@@ -1,16 +1,18 @@
 angular.module('ProjectApp').controller('AddProviderCtrl', function($scope, $http, $mdDialog, modalInfo){
-	$scope.states = [];
 	$scope.provider = {};
 
 	function init(){
-		$http.get("/api/providers").then(function(response){
-			$scope.providers = response.data;
-		});
+		//console.log('llenado');
+		if(modalInfo){
+			//console.log(modalInfo);
+			$scope.provider = modalInfo;
+			$scope.isUpdating = true;
+		}
 	}
 
 	$scope.add = function(){
 		var date = new Date();
-		if($scope.isUpdating){
+		/*if($scope.isUpdating){
 			$scope.provider.dCreate = $scope.provider.dCreate.split("T")[0];
 			$http.put("/api/providers", $scope.provider).then(function(response){
 				$mdDialog.hide();
@@ -21,7 +23,7 @@ angular.module('ProjectApp').controller('AddProviderCtrl', function($scope, $htt
 			$http.post("/api/providers", $scope.provider).then(function(response){
 				$mdDialog.hide();
 			});
-		}
+		}*/
 	};
 
 	$scope.close = function(){

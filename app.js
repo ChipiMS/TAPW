@@ -57,6 +57,11 @@
             templateUrl: 'partials/providers/providers.html'
         });
 
+        $stateProvider.state('webapp.categories', {
+            url: '/categories',
+            templateUrl: 'partials/categories/categories.html'
+        });
+
         if(window.history && window.history.pushState){
             $locationProvider.html5Mode(true);
         }

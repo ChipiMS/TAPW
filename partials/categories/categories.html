@@ -1,0 +1,35 @@
+<div ng-controller="CategoriesCtrl">
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nombre</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="category in categories">
+				<td>{{category.idCategory}}</td>
+				<td>{{category.name}}</td>
+				<td>
+					<md-menu>
+						<md-button aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+							<md-icon class="fa fa-ellipsis-h"></md-icon>
+						</md-button>
+						<md-menu-content>
+							<md-menu-item>
+								<md-button ng-click="edit(category)">Editar</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="delete(category)">Borrar</md-button>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<md-button class="md-fab md-primary" aria-label="Use Android" ng-click="add()">
+		<i class="fa fa-plus"></i>
+	</md-button>
+</div>

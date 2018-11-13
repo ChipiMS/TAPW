@@ -1,6 +1,7 @@
 module.exports = function(app, connection){
 	app.get("/api/providers", function(req, res){
 		var idProvider = req.query.idProvider;
+		res.json(idProvider);
 		connection.query("SELECT * from Provider where idProvider = "+idProvider, function(err, rows, fields){
 			if(err){
 				throw err;
