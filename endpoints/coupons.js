@@ -9,9 +9,9 @@ module.exports = function(app, connection){
 	});
 
 	app.post("/api/coupons", function(req, res){
-		var name = req.body.name;
-		connection.query("insert into Coupon( name) "
-			+"values ('"+name+"');", function(err, rows, fields){
+		var amount = req.body.amount;
+		connection.query("insert into Coupon(amount) "
+			+"values ('"+amount+"');", function(err, rows, fields){
 			if(err){
 				throw err;
 			}
@@ -20,10 +20,19 @@ module.exports = function(app, connection){
 	});
 
 	app.put('/api/coupons', function(req, res){
-		var name = req.body.name;
+		var amount = req.body.amount;
 		var idCoupon = req.body.idCoupon;
-		connection.query("update Coupon set name='"+name+"' "
+		connection.query("update Coupon set amount='"+amount+"' "
 			+"where idCoupon = '"+idCoupon+"';", function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
+	app.get("/api/coupons/list", function(req, res){
+		connection.query("SELECT * from Coupon", function(err, rows, fields){
 			if(err){
 				throw err;
 			}

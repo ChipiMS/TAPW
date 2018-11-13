@@ -28,6 +28,8 @@ require('./endpoints/purchases')(app, connection);
 require('./endpoints/states')(app, connection);
 require('./endpoints/providers')(app, connection);
 require('./endpoints/categories')(app, connection);
+require('./endpoints/coupons')(app, connection);
+require('./endpoints/methods')(app, connection);
 
 /*
 ███████╗██╗██╗     ███████╗    ████████╗██╗   ██╗██████╗ ███████╗███████╗
