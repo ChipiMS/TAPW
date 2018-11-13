@@ -4,7 +4,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '0112',
+	//password: '0112',
+	password: 'passroot',
 	database: "shop"
 });
 var app = express();
@@ -25,6 +26,7 @@ require('./endpoints/countries')(app, connection);
 require('./endpoints/products')(app, connection);
 require('./endpoints/purchases')(app, connection);
 require('./endpoints/states')(app, connection);
+require('./endpoints/providers')(app, connection);
 
 /*
 ███████╗██╗██╗     ███████╗    ████████╗██╗   ██╗██████╗ ███████╗███████╗
