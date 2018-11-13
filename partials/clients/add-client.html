@@ -1,7 +1,8 @@
 <form name="clientsForm" aria-label="Add client">
 	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<h2>Agregar cliente</h2>
+			<h2 ng-if="!isUpdating">Agregar cliente</h2>
+			<h2 ng-if="isUpdating">Actualizar cliente</h2>
 		</div>
 	</md-toolbar>
 	<md-dialog-content>
