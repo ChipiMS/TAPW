@@ -27,7 +27,7 @@ angular.module('ProjectApp').controller('AddProviderCtrl', function($scope, $htt
 	};
 
 	$scope.close = function(){
-		$mdDialog.close();
+		$mdDialog.hide();
 	};
 
 	init();

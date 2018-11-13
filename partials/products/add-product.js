@@ -30,7 +30,7 @@ angular.module('ProjectApp').controller('AddProductCtrl', function($scope, $http
 	};
 
 	$scope.close = function(){
-		$mdDialog.cancel();
+		$mdDialog.hide();
 	};
 
 	init();
