@@ -42,4 +42,14 @@ module.exports = function(app, connection){
 			res.json(rows);
 		});
 	});
+
+	app.delete('/api/categories', function(req, res){
+		var idCategory = req.query.idCategory;
+		connection.query("delete from Category where idCategory = '"+idCategory+"';", function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
 }
