@@ -51,4 +51,90 @@ module.exports = function(app, connection){
 			res.json(response);
 		});
 	});
+
+	app.get("/api/purchases/totals", function(req, res){
+		var byYear = req.query.byYear;
+		var byMonth = req.query.byMonth;
+		var byWeek = req.query.byWeek;
+		connection.query("SELECT * from Purchase p "
+			+"inner join Coupon c on c.idCoupon = p.idCoupon", function(err, rows, fields){
+			var response = [
+				{
+					values: [],
+	                key: 'Subtotal',
+	                color: '#15BA9E',
+	                area: true
+				},
+				{
+					values: [],
+	                key: 'Descuentos',
+	                color: '#FF7081',
+	                area: true
+				},
+				{
+					values: [],
+	                key: 'Total',
+	                color: '#666E7B'
+				}
+			], i, key, row, periods = {}, firstPeriod, lastPeriod;
+			if(err){
+				throw err;
+			}
+			for(i = 0; i < rows.length; i++){
+				row = rows[i];
+				if(byWeek === 1){
+
+				}
+				else if(byMonth === 1){
+
+				}
+				else{
+					key = row.pDate.getFullYear();
+					if(periods[key]){
+						periods[key].discount -= row.amount;
+						periods[key].total += row.total;
+						periods[key].subtotal = periods[key].total+periods[key].discount;
+					}
+					else{
+						periods[key] = {
+							total: row.total,
+							discount: -row.amount,
+							subtotal: row.total-row.amount
+						};
+					}
+				}
+			}
+
+			for(i in periods){
+				if(!firstPeriod){
+					firstPeriod = i;
+				}
+				lastPeriod = i;
+			}
+
+			if(byWeek === 1){
+
+			}
+			else if(byMonth === 1){
+
+			}
+			else{
+				firstPeriod = parseInt(firstPeriod);
+				lastPeriod = parseInt(lastPeriod);
+				for(i = firstPeriod; i <= lastPeriod; i++){
+					if(periods[i]){
+						response[0].values.push({x: i, y: periods[i].subtotal});
+						response[1].values.push({x: i, y: periods[i].discount});
+						response[2].values.push({x: i, y: periods[i].total});
+					}
+					else{
+						response[0].values.push({x: i, y: 0});
+						response[1].values.push({x: i, y: 0});
+						response[2].values.push({x: i, y: 0});
+					}
+				}
+			}
+			res.json(response);
+		});
+	});
 }

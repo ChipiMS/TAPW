@@ -3,10 +3,6 @@ angular.module('ProjectApp').controller('PurchasesCtrl', function($scope, $http)
 		$scope.purchases = response.data;
 	});
 
-	$http.get("/api/purchases/totals").then(function(response){
-		console.log(response);
-	});
-
 	$scope.toggle = function(cart){
 		cart.expanded = !cart.expanded;
 	};
