@@ -1,6 +1,7 @@
 module.exports = function(app, connection){
 	app.get('/api/methods', function(req, res){
-		connection.query('SELECT * from PaymentMethod', function(err, rows, fields){
+		var idPaymentMethod = req.query.idPaymentMethod;
+		connection.query('SELECT * from PaymentMethod where idPaymentMethod = '+idPaymentMethod, function(err, rows, fields){
 			if(err){
 				throw err;
 			}
@@ -33,6 +34,16 @@ module.exports = function(app, connection){
 
 	app.get("/api/methods/list", function(req, res){
 		connection.query("SELECT * from PaymentMethod", function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
+	app.delete('/api/methods', function(req, res){
+		var idPaymentMethod = req.query.idPaymentMethod;
+		connection.query("delete from PaymentMethod where idPaymentMethod = '"+idPaymentMethod+"';", function(err, rows, fields){
 			if(err){
 				throw err;
 			}

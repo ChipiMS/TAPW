@@ -1,6 +1,7 @@
 module.exports = function(app, connection){
 	app.get('/api/coupons', function(req, res){
-		connection.query('SELECT * from Coupon', function(err, rows, fields){
+		var idCoupon = req.query.idCoupon;
+		connection.query('SELECT * from Coupon where idCoupon = '+idCoupon, function(err, rows, fields){
 			if(err){
 				throw err;
 			}
@@ -33,6 +34,16 @@ module.exports = function(app, connection){
 
 	app.get("/api/coupons/list", function(req, res){
 		connection.query("SELECT * from Coupon", function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
+	app.delete('/api/coupons', function(req, res){
+		var idCoupon = req.query.idCoupon;
+		connection.query("delete from Category where idCoupon = '"+idCoupon+"';", function(err, rows, fields){
 			if(err){
 				throw err;
 			}
