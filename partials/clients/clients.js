@@ -1,4 +1,4 @@
-angular.module('ProjectApp').controller('ClientsCtrl', function($scope, $http, $mdMenu, $rootScope, $mdDialog){
+angular.module('ProjectApp').controller('ClientsCtrl', function($scope, $http, $mdMenu, $rootScope, $mdDialog, $timeout){
 	var cleanEvent;
 	
 	function init(){
@@ -28,6 +28,13 @@ angular.module('ProjectApp').controller('ClientsCtrl', function($scope, $http, $
 			locals: {modalInfo: client},
 			templateUrl: 'partials/clients/add-client.html'
 		}).then(init);
+	};
+
+	$scope.show = function(client){
+		$scope.selectedClient = false;
+		$timeout(function(){
+			$scope.selectedClient = client.username;
+		});
 	};
 
 	cleanEvent = $rootScope.$on('global:clickListen', $mdMenu.hide);

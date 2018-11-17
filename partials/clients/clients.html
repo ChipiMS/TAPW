@@ -41,12 +41,18 @@
 							<md-menu-item>
 								<md-button ng-click="delete(client)">Borrar</md-button>
 							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="show(client)">Mostrar ventas</md-button>
+							</md-menu-item>
 						</md-menu-content>
 					</md-menu>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<chart-total-orders ng-if="selectedClient" client="selectedClient" title="Total de ventas anuales"></chart-total-orders>
+    <chart-total-orders ng-if="selectedClient" client="selectedClient" title="Total de ventas mensuales"></chart-total-orders>
+    <chart-total-orders ng-if="selectedClient" client="selectedClient" title="Total de ventas semanales"></chart-total-orders>
 	<md-button class="md-fab md-primary" aria-label="Use Android" ng-click="add()">
 		<i class="fa fa-plus"></i>
 	</md-button>

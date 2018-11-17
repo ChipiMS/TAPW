@@ -1,6 +1,7 @@
 angular.module('ProjectApp').directive('chartTotalOrders', function($http){
     return {
         scope: {
+            client: "=",
             title: '@'
         },
         replace: true,
@@ -77,8 +78,10 @@ angular.module('ProjectApp').directive('chartTotalOrders', function($http){
                 if($scope.title === "Total de ventas semanales"){
                     params.byWeek = true;
                 }
+                if($scope.client){
+                    params.client = $scope.client;
+                }
                 $http.get("/api/purchases/totals", {params: params}).then(function(response){
-                    console.log(response);
                     $scope.data = response.data;
                 });
             }

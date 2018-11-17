@@ -56,8 +56,9 @@ module.exports = function(app, connection){
 		var byYear = req.query.byYear;
 		var byMonth = req.query.byMonth;
 		var byWeek = req.query.byWeek;
+		var client = req.query.client;
 		connection.query("SELECT * from Purchase p "
-			+"inner join Coupon c on c.idCoupon = p.idCoupon", function(err, rows, fields){
+			+"inner join Coupon c on c.idCoupon = p.idCoupon"+(client ? " where username = '"+client+"'" : ""), function(err, rows, fields){
 			var response = [
 				{
 					values: [],
@@ -113,53 +114,55 @@ module.exports = function(app, connection){
 				lastPeriod = i;
 			}
 
-			if(byWeek){
-				firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, parseInt(firstPeriod.slice(6, 8)));
-				lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, parseInt(lastPeriod.slice(6, 8)));
-				for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setDate(i.getDate()+7), idx++){
-					key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2)+("0"+i.getDate()).slice(-2);
-					if(periods[key]){
-						response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
-						response[1].values.push({x: idx, key: key, y: periods[key].discount});
-						response[2].values.push({x: idx, key: key, y: periods[key].total});
-					}
-					else{
-						response[0].values.push({x: idx, key: key, y: 0});
-						response[1].values.push({x: idx, key: key, y: 0});
-						response[2].values.push({x: idx, key: key, y: 0});
-					}
-				}
-			}
-			else if(byMonth){
-				firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, 1);
-				lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, 1);
-				for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setMonth(i.getMonth()+1), idx++){
-					key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2);
-					if(periods[key]){
-						response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
-						response[1].values.push({x: idx, key: key, y: periods[key].discount});
-						response[2].values.push({x: idx, key: key, y: periods[key].total});
-					}
-					else{
-						response[0].values.push({x: idx, key: key, y: 0});
-						response[1].values.push({x: idx, key: key, y: 0});
-						response[2].values.push({x: idx, key: key, y: 0});
+			if(firstPeriod){
+				if(byWeek){
+					firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, parseInt(firstPeriod.slice(6, 8)));
+					lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, parseInt(lastPeriod.slice(6, 8)));
+					for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setDate(i.getDate()+7), idx++){
+						key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2)+("0"+i.getDate()).slice(-2);
+						if(periods[key]){
+							response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
+							response[1].values.push({x: idx, key: key, y: periods[key].discount});
+							response[2].values.push({x: idx, key: key, y: periods[key].total});
+						}
+						else{
+							response[0].values.push({x: idx, key: key, y: 0});
+							response[1].values.push({x: idx, key: key, y: 0});
+							response[2].values.push({x: idx, key: key, y: 0});
+						}
 					}
 				}
-			}
-			else{
-				firstPeriod = parseInt(firstPeriod);
-				lastPeriod = parseInt(lastPeriod);
-				for(i = firstPeriod, idx = 0; i <= lastPeriod; i++, idx++){
-					if(periods[i]){
-						response[0].values.push({x: idx, key: i, y: periods[i].subtotal});
-						response[1].values.push({x: idx, key: i, y: periods[i].discount});
-						response[2].values.push({x: idx, key: i, y: periods[i].total});
+				else if(byMonth){
+					firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, 1);
+					lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, 1);
+					for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setMonth(i.getMonth()+1), idx++){
+						key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2);
+						if(periods[key]){
+							response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
+							response[1].values.push({x: idx, key: key, y: periods[key].discount});
+							response[2].values.push({x: idx, key: key, y: periods[key].total});
+						}
+						else{
+							response[0].values.push({x: idx, key: key, y: 0});
+							response[1].values.push({x: idx, key: key, y: 0});
+							response[2].values.push({x: idx, key: key, y: 0});
+						}
 					}
-					else{
-						response[0].values.push({x: idx, key: i, y: 0});
-						response[1].values.push({x: idx, key: i, y: 0});
-						response[2].values.push({x: idx, key: i, y: 0});
+				}
+				else{
+					firstPeriod = parseInt(firstPeriod);
+					lastPeriod = parseInt(lastPeriod);
+					for(i = firstPeriod, idx = 0; i <= lastPeriod; i++, idx++){
+						if(periods[i]){
+							response[0].values.push({x: idx, key: i, y: periods[i].subtotal});
+							response[1].values.push({x: idx, key: i, y: periods[i].discount});
+							response[2].values.push({x: idx, key: i, y: periods[i].total});
+						}
+						else{
+							response[0].values.push({x: idx, key: i, y: 0});
+							response[1].values.push({x: idx, key: i, y: 0});
+							response[2].values.push({x: idx, key: i, y: 0});
+						}
 					}
 				}
 			}
