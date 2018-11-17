@@ -76,32 +76,33 @@ module.exports = function(app, connection){
 	                key: 'Total',
 	                color: '#666E7B'
 				}
-			], i, key, row, periods = {}, firstPeriod, lastPeriod;
+			], i, key, row, periods = {}, firstPeriod, lastPeriod, monday, idx;
 			if(err){
 				throw err;
 			}
 			for(i = 0; i < rows.length; i++){
 				row = rows[i];
-				if(byWeek === 1){
-
+				if(byWeek){
+					monday = new Date(row.pDate.getFullYear(), row.pDate.getMonth(), row.pDate.getDate()-row.pDate.getDay());
+					key = monday.getFullYear()+("0"+(monday.getMonth()+1)).slice(-2)+("0"+monday.getDate()).slice(-2);
 				}
-				else if(byMonth === 1){
-
+				else if(byMonth){
+					key = row.pDate.getFullYear()+("0"+(row.pDate.getMonth()+1)).slice(-2);
 				}
 				else{
 					key = row.pDate.getFullYear();
-					if(periods[key]){
-						periods[key].discount -= row.amount;
-						periods[key].total += row.total;
-						periods[key].subtotal = periods[key].total+periods[key].discount;
-					}
-					else{
-						periods[key] = {
-							total: row.total,
-							discount: -row.amount,
-							subtotal: row.total-row.amount
-						};
-					}
+				}
+				if(periods[key]){
+					periods[key].discount -= row.amount;
+					periods[key].total += row.total;
+					periods[key].subtotal = periods[key].total+periods[key].discount;
+				}
+				else{
+					periods[key] = {
+						total: row.total,
+						discount: -row.amount,
+						subtotal: row.total-row.amount
+					};
 				}
 			}
 
@@ -112,25 +113,53 @@ module.exports = function(app, connection){
 				lastPeriod = i;
 			}
 
-			if(byWeek === 1){
-
+			if(byWeek){
+				firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, parseInt(firstPeriod.slice(6, 8)));
+				lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, parseInt(lastPeriod.slice(6, 8)));
+				for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setDate(i.getDate()+7), idx++){
+					key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2)+("0"+i.getDate()).slice(-2);
+					if(periods[key]){
+						response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
+						response[1].values.push({x: idx, key: key, y: periods[key].discount});
+						response[2].values.push({x: idx, key: key, y: periods[key].total});
+					}
+					else{
+						response[0].values.push({x: idx, key: key, y: 0});
+						response[1].values.push({x: idx, key: key, y: 0});
+						response[2].values.push({x: idx, key: key, y: 0});
+					}
+				}
 			}
-			else if(byMonth === 1){
-
+			else if(byMonth){
+				firstPeriod = new Date(parseInt(firstPeriod.slice(0, 4)), parseInt(firstPeriod.slice(4, 6))-1, 1);
+				lastPeriod = new Date(parseInt(lastPeriod.slice(0, 4)), parseInt(lastPeriod.slice(4, 6))-1, 1);
+				for(i = firstPeriod, idx = 0; i.getTime() <= lastPeriod.getTime(); i.setMonth(i.getMonth()+1), idx++){
+					key = i.getFullYear()+("0"+(i.getMonth()+1)).slice(-2);
+					if(periods[key]){
+						response[0].values.push({x: idx, key: key, y: periods[key].subtotal});
+						response[1].values.push({x: idx, key: key, y: periods[key].discount});
+						response[2].values.push({x: idx, key: key, y: periods[key].total});
+					}
+					else{
+						response[0].values.push({x: idx, key: key, y: 0});
+						response[1].values.push({x: idx, key: key, y: 0});
+						response[2].values.push({x: idx, key: key, y: 0});
+					}
+				}
 			}
 			else{
 				firstPeriod = parseInt(firstPeriod);
 				lastPeriod = parseInt(lastPeriod);
-				for(i = firstPeriod; i <= lastPeriod; i++){
+				for(i = firstPeriod, idx = 0; i <= lastPeriod; i++, idx++){
 					if(periods[i]){
-						response[0].values.push({x: i, y: periods[i].subtotal});
-						response[1].values.push({x: i, y: periods[i].discount});
-						response[2].values.push({x: i, y: periods[i].total});
+						response[0].values.push({x: idx, key: i, y: periods[i].subtotal});
+						response[1].values.push({x: idx, key: i, y: periods[i].discount});
+						response[2].values.push({x: idx, key: i, y: periods[i].total});
 					}
 					else{
-						response[0].values.push({x: i, y: 0});
-						response[1].values.push({x: i, y: 0});
-						response[2].values.push({x: i, y: 0});
+						response[0].values.push({x: idx, key: i, y: 0});
+						response[1].values.push({x: idx, key: i, y: 0});
+						response[2].values.push({x: idx, key: i, y: 0});
 					}
 				}
 			}

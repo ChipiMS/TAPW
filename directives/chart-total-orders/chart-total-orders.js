@@ -7,6 +7,21 @@ angular.module('ProjectApp').directive('chartTotalOrders', function($http){
         restrict: 'E',
         templateUrl: "directives/chart-total-orders/chart-total-orders.html",
         link: function($scope){
+            function tickFormat(index, notTooltip){
+                if(index === Math.floor(index)){
+                    if($scope.title === "Total de ventas anuales"){
+                        return $scope.data[0].values[index].key;
+                    }
+                    if($scope.title === "Total de ventas mensuales"){
+                        return $scope.data[0].values[index].key.slice(4, 6)+"-"+$scope.data[0].values[index].key.slice(0, 4);
+                    }
+                    if($scope.title === "Total de ventas semanales"){
+                        return $scope.data[0].values[index].key.slice(6, 8)+"-"+$scope.data[0].values[index].key.slice(4, 6)+"-"+$scope.data[0].values[index].key.slice(0, 4);
+                    }
+                }
+                return "";
+            }
+
             $scope.options = {
                 chart: {
                     type: 'lineChart',
@@ -20,6 +35,7 @@ angular.module('ProjectApp').directive('chartTotalOrders', function($http){
                     clipEdge: false, 
                     showLegend: false,
                     interpolate: "monotone",
+                    focusEnable: true,
                     x: function(d){
                         if(d){
                             return d.x;
@@ -34,9 +50,7 @@ angular.module('ProjectApp').directive('chartTotalOrders', function($http){
                     },
                     useInteractiveGuideline: true,
                     xAxis: {
-                        tickFormat: function(index, notTooltip){
-                            return index;
-                        },
+                        tickFormat: tickFormat,
                         showMaxMin: false,
                         tickPadding: 25
                     },
@@ -44,16 +58,32 @@ angular.module('ProjectApp').directive('chartTotalOrders', function($http){
                         tickFormat: function(d){
                             return d3.format(',.02f')(d);
                         }
-                    }
+                    },
+                    x2Axis: {
+                        tickFormat: tickFormat,
+                        showMaxMin: false
+                    },
                 }
             };
 
-            if($scope.title === "Total de ventas anuales"){
-                $http.get("/api/purchases/totals").then(function(response){
+            function init(){
+                var params = {};
+                if($scope.title === "Total de ventas anuales"){
+                    params.byYear = true;
+                }
+                if($scope.title === "Total de ventas mensuales"){
+                    params.byMonth = true;
+                }
+                if($scope.title === "Total de ventas semanales"){
+                    params.byWeek = true;
+                }
+                $http.get("/api/purchases/totals", {params: params}).then(function(response){
                     console.log(response);
                     $scope.data = response.data;
                 });
             }
+
+            init();
         }
     };
 });
