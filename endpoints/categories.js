@@ -10,10 +10,9 @@ module.exports = function(app, connection){
 	});
 
 	app.post("/api/categories", function(req, res){
-		var idCategory = req.body.idCategory;
 		var name = req.body.name;
-		connection.query("insert into Category(idCategory, name) "
-			+"values ('"+idCategory+"', '"+name+"');", function(err, rows, fields){
+		connection.query("insert into Category(name) "
+			+"values ('"+name+"');", function(err, rows, fields){
 			if(err){
 				throw err;
 			}

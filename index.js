@@ -4,8 +4,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	//password: '0112',
-	password: 'passroot',
+	password: '0112',
+	//password: 'passroot',
 	database: "shop"
 });
 var app = express();

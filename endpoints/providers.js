@@ -10,10 +10,9 @@ module.exports = function(app, connection){
 	});
 
 	app.post("/api/providers", function(req, res){
-		var idProvider = req.body.idProvider;
 		var name = req.body.name;
-		connection.query("insert into Provider(idProvider, name) "
-			+"values ('"+idProvider+"', '"+name+"');", function(err, rows, fields){
+		connection.query("insert into Provider(name) "
+			+"values ('"+name+"');", function(err, rows, fields){
 			if(err){
 				throw err;
 			}

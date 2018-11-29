@@ -12,20 +12,20 @@ angular.module('ProjectApp').controller('CategoriesCtrl', function($scope, $http
 			clickOutsideToClose: true,
 			controller: "AddCategoryCtrl",
 			locals: {modalInfo: false},
-			templateUrl: 'partials/categories/add-provider.html'
+			templateUrl: 'partials/categories/add-category.html'
 		}).then(init);
 	};
 
-	$scope.delete = function(provider){
-		$http.delete("/api/categories", {params: {idCategory: provider.idCategory}}).then(init);
+	$scope.delete = function(category){
+		$http.delete("/api/categories", {params: {idCategory: category.idCategory}}).then(init);
 	};
 
-	$scope.edit = function(provider){
+	$scope.edit = function(category){
 		$mdDialog.show({
 			clickOutsideToClose: true,
-			controller: "AddProviderCtrl",
-			locals: {modalInfo: provider},
-			templateUrl: 'partials/categories/add-provider.html'
+			controller: "AddCategoryCtrl",
+			locals: {modalInfo: category},
+			templateUrl: 'partials/categories/add-category.html'
 		}).then(init);
 	};
 
