@@ -10,14 +10,35 @@ module.exports = function(app, connection){
 	});
 
 	app.get("/api/products/list", function(req, res){
-		connection.query("SELECT p.*, pr.name provider, c.name category "
+		var productIdx, product, categories = {}, category, categoryId, response = [];
+		var orderByCategory = req.query.orderByCategory;
+		connection.query("SELECT p.*, pr.name provider, c.name category, c.idCategory "
 			+"from Product p "
 			+"inner join Category c on c.idCategory = p.idCategory "
 			+"inner join Provider pr on pr.idProvider = p.idProvider;", function(err, rows, fields){
 			if(err){
 				throw err;
 			}
-			res.json(rows);
+			if(orderByCategory){
+				for(productIdx = 0; productIdx < rows.length; productIdx++){
+					product = rows[productIdx];
+					if(!categories[product.idCategory]){
+						categories[product.idCategory] = {
+							name: product.category,
+							products: []
+						};
+					}
+					category = categories[product.idCategory];
+					category.products.push(product);
+				}
+				for(categoryId in categories){
+					response.push(categories[categoryId]);
+				}
+				res.json(response);
+			}
+			else{
+				res.json(rows);
+			}
 		});
 	});
 
