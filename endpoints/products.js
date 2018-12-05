@@ -42,6 +42,26 @@ module.exports = function(app, connection){
 		});
 	});
 
+	app.get("/api/products", function(req, res){
+		var idCategory = req.query.idCategory;
+		connection.query("SELECT p.*, pr.name provider from Product p inner join Provider pr on pr.idProvider = p.idProvider where p.idCategory = "+idCategory, function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
+	app.get("/api/product", function(req, res){
+		var idProduct = req.query.idProduct;
+		connection.query("SELECT * from Product where idProduct = "+idProduct, function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
 	app.post('/api/products', function(req, res){
 		var name = req.body.name;
 		var price = req.body.price;

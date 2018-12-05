@@ -34,7 +34,7 @@ module.exports = function(app, connection){
 	});
 
 	app.get("/api/states/list", function(req, res){
-		var idCountry = req.query.idCountry;
+		//var idCountry = req.query.idCountry;
 		connection.query("SELECT * from State", function(err, rows, fields){
 			if(err){
 				throw err;

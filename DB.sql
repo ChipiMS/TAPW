@@ -110,6 +110,20 @@ insert into Provider(name)
 insert into Category(name)
 	values('Deportes');
 
+insert into Category (name) values ('Kids');
+insert into Category (name) values ('Beauty');
+insert into Category (name) values ('Home');
+insert into Category (name) values ('Shoes');
+insert into Category (name) values ('Sports');
+insert into Category (name) values ('Grocery');
+insert into Category (name) values ('Electronics');
+insert into Category (name) values ('Industrial');
+insert into Category (name) values ('Tools');
+insert into Category (name) values ('Clothing');
+insert into Category (name) values ('Garden');
+insert into Category (name) values ('Baby');
+insert into Category (name) values ('Automotive');
+
 insert into Coupon(idCoupon, amount)
 	values('00000', 0);
 

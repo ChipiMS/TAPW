@@ -1,5 +1,5 @@
 module.exports = function(app, connection){
-	app.get('/api/coupons', function(req, res){
+	app.get('/api/coupon', function(req, res){
 		var idCoupon = req.query.idCoupon;
 		connection.query('SELECT * from Coupon where idCoupon = '+idCoupon, function(err, rows, fields){
 			if(err){

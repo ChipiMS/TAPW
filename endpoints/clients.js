@@ -21,10 +21,21 @@ module.exports = function(app, connection){
 		});
 	});
 
-	app.post('/api/clients', function(req, res){
+	app.get("/api/client", function(req, res){
+		var username = req.query.username;
+		connection.query("SELECT * from Customer where username='"+username+"' limit 1;", function(err, rows, fields){
+			if(err){
+				throw err;
+			}
+			res.json(rows);
+		});
+	});
+
+	app.post('/api/client', function(req, res){
 		var username = req.body.username;
 		var password = req.body.password;
-		var dCreate = req.body.dCreate;
+		//var dCreate = req.body.dCreate;
+		var dCreate = (new Date().getFullYear())+"-"+(new Date().getMonth()+1)+"-"+(new Date().getDate());
 		var name = req.body.name;
 		var lastName = req.body.lastName;
 		var email = req.body.email;
@@ -44,8 +55,8 @@ module.exports = function(app, connection){
 
 	app.put('/api/clients', function(req, res){
 		var username = req.body.username;
-		var password = req.body.password;
-		var dCreate = req.body.dCreate;
+		//var password = req.body.password;
+		//var dCreate = req.body.dCreate;
 		var name = req.body.name;
 		var lastName = req.body.lastName;
 		var email = req.body.email;
@@ -54,7 +65,7 @@ module.exports = function(app, connection){
 		var city = req.body.city;
 		var postalCode = req.body.postalCode;
 		var idState = req.body.idState;
-		connection.query("update Customer set password='"+password+"', dCreate='"+dCreate+"', name='"+name+"', lastName='"+lastName+"', email='"+email+"', phone='"+phone+"', street='"+street+"', city='"+city+"', postalCode='"+postalCode+"', idState='"+idState+"' "
+		connection.query("update Customer set name='"+name+"', lastName='"+lastName+"', email='"+email+"', phone='"+phone+"', street='"+street+"', city='"+city+"', postalCode='"+postalCode+"', idState='"+idState+"' "
 			+"where username = '"+username+"';", function(err, rows, fields){
 			if(err){
 				throw err;
